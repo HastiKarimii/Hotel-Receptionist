@@ -13,17 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
-
+from django.shortcuts import redirect
 from django.urls import path, include
 from django.contrib import admin
 from accounts.views import home
 
 
 urlpatterns = [
+
+    path('logout/', lambda request: redirect('home', permanent=False)),
     path('admin/', admin.site.urls),
     path('receptionist/', include('accounts.urls')),
     path('reservation/', include('reservation.urls')),
     path('', home, name='home'),
+
 ]
 

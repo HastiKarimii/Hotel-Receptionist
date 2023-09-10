@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+from decouple import config
 import django
 from django.utils.encoding import force_str
 django.utils.encoding.force_text = force_str
@@ -24,16 +24,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-diql_igdkw21^@917w9e3j$m1@a1nki9hs=8(r(d#($5l9=4$y'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True)
 
 ALLOWED_HOSTS = []
 
 # Application definition
 
 INSTALLED_APPS = [
+    'adminlte3',
+    'adminlte3_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'reservation',
-    'django_extensions',
+    # 'django_extensions',
     'bootstrap_datepicker_plus',
     'bootstrap5',
     'crispy_forms',
@@ -144,14 +146,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 ###Email varification
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_FROM = 'hanastandly@gmail.com'
-EMAIL_HOST_USER = 'hanastandly@gmail.com'
-EMAIL_HOST_PASSWORD = 'mkuzuyyaalzyflfu'
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_FROM = config('EMAIL_FROM')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = '(Hotel Dad) Support <no-reply@mycompany.com>'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 PASSWORD_RESET_TIMEOUT = 14400
 
@@ -172,6 +174,4 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-
-
-
+LOGOUT_REDIRECT_URL = 'home'
